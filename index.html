@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pluviômetro Arduino</title>
+  <link rel="stylesheet" href="css/estilos.css" />
+  <script src="scripts/protocolo.js" defer></script>
+  <script src="scripts/serial.js" defer></script>
+  <script src="scripts/painel.js" defer></script>
+  <script src="scripts/app.js" defer></script>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Pluviômetro Arduino Uno</h1>
+    <p class="subtitle">Leitura em tempo real • 1 pulso = 0,2 mm • proveta de 0 a 10 mm</p>
+
+    <div class="toolbar">
+      <button type="button" id="connectButton">Conectar ao Arduino</button>
+      <button type="button" id="resetButton" disabled>Reiniciar teste</button>
+      <span id="status" class="status" role="status">Desconectado</span>
+    </div>
+
+    <p id="serialMessage" class="warning serial-message" role="status" hidden></p>
+
+    <div class="grid">
+      <section class="card">
+        <div class="metrics">
+          <div class="metric">
+            <div class="label">Pulsos</div>
+            <div class="value" id="pulseValue">0</div>
+          </div>
+
+          <div class="metric">
+            <div class="label">Chuva acumulada</div>
+            <div class="value"><span id="mmValue">0.0</span> mm</div>
+          </div>
+        </div>
+
+        <div class="cylinder-wrap">
+          <div class="scale" id="scale"></div>
+
+          <div class="cylinder">
+            <div class="water" id="water">
+              <div class="wave wave1"></div>
+              <div class="wave wave2"></div>
+              <div class="wave wave3"></div>
+            </div>
+            <div class="inside-value"><span id="insideValue">0.0</span> mm</div>
+          </div>
+        </div>
+
+        <div class="limit-note">Escala visual da proveta: 0 a 10 mm</div>
+        <div id="warning" class="warning" hidden>
+          A chuva acumulada passou de 10 mm. A proveta permanece visualmente cheia, mas o valor real continua sendo exibido.
+        </div>
+      </section>
+
+      <div class="right-column">
+        <section class="card">
+          <h2>Gráfico</h2>
+          <canvas id="chart" width="760" height="300"></canvas>
+        </section>
+
+        <section class="card">
+          <h2>Tabela de leituras</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Horário</th>
+                  <th>Pulsos</th>
+                  <th>Chuva acumulada</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
